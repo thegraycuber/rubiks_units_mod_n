@@ -48,7 +48,7 @@ def insert_prime_powers(n,n_index,n_prime_powers,curr_alg,n_algs,curr_unit):
 
     if n_index == len(n_prime_powers):
 
-        n_algs.append([curr_unit,optimize_alg(curr_alg)])
+        n_algs.append([curr_unit,curr_alg])
         return n_algs
     
 
@@ -77,13 +77,13 @@ def add_multipliers(n,n_prime_powers):
         for power_rep in range(power[1]):
             power[-1].append(curr_alg)
             curr_alg += power[2]
-            curr_alg = optimize_alg(curr_alg)
+            #curr_alg = optimize_alg(curr_alg)
         
     return n_prime_powers
 
-def optimize_alg(alg_to_optimize):
+#def optimize_alg(alg_to_optimize):
 
-    return random_alg(18)
+   # return random_alg(18)
 
 def compress(n_algs,symbol_index,new_symbols):
 
@@ -140,31 +140,31 @@ n_prime_powers = [
 ]
 """
 
-
+"""
 # medium case
 n = 9360
 n_prime_powers = [
-    [13,7,'L2 U F'' R2 F U'' L2 U F'' R2 F U'' L D2 R U F U R'' F D'' L'' F'' D'' L ',2],
-    [5,4,'U2 L F'' D R F D R2 D2 L'' U'' F'' U ',2],
-    [9,6,'R'' U R2 D L'' B2 L D'' R2 U'' R U'' ',2],
-    [16,4,'U'' L2 F2 B L B'' U'' L'' F2 L'' F'' L''  ',3],
-    [16,2,'U'' F B'' R U'' B R'' U F'' B L'' U B'' L ',7]
+    
+    [13,7,"L2 U F' R2 F U' L2 U F' R2 F U' L D2 R U F U R' F D' L' F' D' L ",2],
+    [5,4,"U2 L F' D R F D R2 D2 L' U' F' U ",2],
+    [9,6,"R' U R2 D L' B2 L D' R2 U' R U' ",2],
+    [16,4,"U' L2 F2 B L B' U' L' F2 L' F' L' ",3],
+    [16,2,"U' F B' R U' B R' U F' B L' U B' L ",7]
+    
 ]
-
-
 """
+
 # maximum case
 n = 2424240
 n_prime_powers = [
-    [37,17,'U2 L F'' R B L2 D2 B B R'' F L B2 R'' F D'' L'' F'' D'' L2 D2 R U F U ',2],
-    [13,12,'L2 U F'' R2 F U'' L2 U F'' R2 F U'' L D2 R U F U R'' F D'' L'' F'' D'' L ',2],
-    [7,6,'R'' B2 R U'' F2 U R'' B2 R U'' F2 U R U R U'' R2 U2 R L F R'' F'' L'' U ',3],
-    [5,4,'U2 L F'' D R F D R2 D2 L'' U'' F'' U ',2],
-    [9,6,'R'' U R2 D L'' B2 L D'' R2 U'' R U'' ',2],
-    [16,4,'U'' L2 F2 B L B'' U'' L'' F2 L'' F'' L''  ',3],
-    [16,2,'U'' F B'' R U'' B R'' U F'' B L'' U B'' L ',7]
+    [37,17,"U2 L F' R B L2 D2 B B R' F L B2 R' F D' L' F' D' L2 D2 R U F U ",2],
+    [13,12,"L2 U F' R2 F U' L2 U F' R2 F U' L D2 R U F U R' F D' L' F' D' L ",2],
+    [7,6,"R' B2 R U' F2 U R' B2 R U' F2 U R U R U' R2 U2 R L F R' F' L' U ",3],
+    [5,4,"U2 L F' D R F D R2 D2 L' U' F' U ",2],
+    [9,6,"R' U R2 D L' B2 L D' R2 U' R U' ",2],
+    [16,4,"U' L2 F2 B L B' U' L' F2 L' F' L'  ",3],
+    [16,2,"U' F B' R U' B R' U F' B L' U B' L ",7]
 ]
-"""
 
 
 replacer = [[" ",""],["R'",'r'],["L'","l"],["U'","u"],["F'","f"],["D'","d"],["B'","b"],["F2","FF"],["U2","UU"],["R2","RR"],["L2","LL"],["B2","BB"],["D2","DD"]]
@@ -179,16 +179,53 @@ n_index = 0
 n_algs = []
 curr_unit = 1
 
-n_prime_powers = add_multipliers(n,n_prime_powers)
+#STEP 1: MAKE BASE ALGS
+if True:
+
+    n_prime_powers = add_multipliers(n,n_prime_powers)
+
+    step_1_out = []
+
+    for i, n_pow in enumerate(n_prime_powers):
+        for j, n_pow_alg in enumerate(n_pow[5]):
+            step_1_out.append([i,j,n_pow_alg])
+
+    file_output(step_1_out,'rubiks_mod_n_base_algs.csv')
 
 
-n_algs = insert_prime_powers(n,0,n_prime_powers,'',[],1)
+#STEP 2: OPTIMIZE BASE ALGS 
 
-for unit in n_algs:
-    for rep in replacer:
-        unit[1] = unit[1].replace(rep[0],rep[1])
+# optimize the algs in rubiks_mod_n_base_algs.csv
 
-n_algs, compression = compress(n_algs,symbol_index,new_symbols)
 
-file_output(n_algs,'n_alg.csv')
-file_output(compression,'n_alg_compress.csv')
+#STEP 3: MAKE ALL UNIT ALGS
+if False:
+
+    n_prime_powers = add_multipliers(n,n_prime_powers)
+
+    step_3_in = file_input('rubiks_mod_n_base_algs.csv')
+
+    for alg_in in step_3_in:
+        n_prime_powers[int(alg_in[0])][5][int(alg_in[1])] = alg_in[2]
+
+    n_algs = insert_prime_powers(n,0,n_prime_powers,'',[],1)
+
+    file_output(n_algs,'rubiks_mod_n_unit_algs.csv')
+
+
+#STEP 4: OPTIMIZE UNIT ALGS
+
+# optimize the algs in rubiks_mod_n_unit_algs.csv
+
+#STEP 5: OPTIMIZE UNIT ALGS
+if False:
+
+    step_5_in = file_input('rubiks_mod_n_unit_algs.csv')
+    for unit in n_algs:
+        for rep in replacer:
+            unit[1] = unit[1].replace(rep[0],rep[1])
+
+    n_algs, compression = compress(n_algs,symbol_index,new_symbols)
+
+    file_output(n_algs,'n_alg.csv')
+    file_output(compression,'n_alg_compress.csv')
