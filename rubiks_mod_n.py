@@ -178,13 +178,13 @@ n_prime_powers = [
 # maximum case
 n = 2424240
 n_prime_powers = [
-    [37, 17, "U2 L F' R B L2 D2 B B R' F L B2 R' F D' L' F' D' L2 D2 R U F U ", 2],
-    [13, 12, "L2 U F' R2 F U' L2 U F' R2 F U' L D2 R U F U R' F D' L' F' D' L ", 2],
-    [7, 6, "R' B2 R U' F2 U R' B2 R U' F2 U R U R U' R2 U2 R L F R' F' L' U ", 3],
-    [5, 4, "U2 L F' D R F D R2 D2 L' U' F' U ", 2],
-    [9, 6, "R' U R2 D L' B2 L D' R2 U' R U' ", 2],
-    [16, 4, "U' L2 F2 B L B' U' L' F2 L' F' L' ", 3],
-    [16, 2, "U' F B' R U' B R' U F' B L' U B' L ", 7],
+    [37,3,"U2 L F' R B L2 D2 B R' F L B2 R' F D' L' F' D' L2 D2 R U F U ",2], #19
+    [13,6,"L2 U F' R2 F U' L2 U F' R2 F U' L D2 R U F U R' F D' L' F' D' L ",2], #12
+    [7,4,"R' B2 R U' F2 U R' B2 R U' F2 U2 R U R U' R2 U2 R L F R' F' L' U ",3], #6
+    [5,4,"U2 L F' D R F D R2 D2 L' U' F' U ",2],
+    [9,4,"R' U R2 D L' B2 L D' R2 U' R U' ",2],#6
+    [16,4,"U' L2 F2 B L B' U' L' F2 L' F' L' F ",3],
+    [16,2,"U' F B' R U' B R' U F' B L' U B' L ",7]
 ]
 
 
