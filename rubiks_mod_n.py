@@ -50,14 +50,14 @@ def insert_prime_powers(n,n_index,n_prime_powers,curr_alg,n_algs,curr_unit):
 
         n_algs.append([curr_unit,curr_alg])
         return n_algs
-    
+
 
     for curr_multiplier in range(n_prime_powers[n_index][1]):
         if n_index == 0:
             print("Main Cycle ",curr_multiplier," of ", n_prime_powers[n_index][1])
         n_algs = insert_prime_powers(n,n_index+1,n_prime_powers,curr_alg + n_prime_powers[n_index][5][curr_multiplier],n_algs,curr_unit)
         curr_unit = (curr_unit * n_prime_powers[n_index][4]) % n
-    
+
     return n_algs
 
 def add_multipliers(n,n_prime_powers):
@@ -78,7 +78,7 @@ def add_multipliers(n,n_prime_powers):
             power[-1].append(curr_alg)
             curr_alg += power[2]
             #curr_alg = optimize_alg(curr_alg)
-        
+
     return n_prime_powers
 
 #def optimize_alg(alg_to_optimize):
@@ -105,7 +105,7 @@ def compress(n_algs,symbol_index,new_symbols):
         for unit in n_algs:
             for start_symbol in range(len(unit[1])-2,-1,-1):
                 if unit[1][start_symbol] == max_split[0] and unit[1][start_symbol+1] == max_split[1]:
-                    
+
                     unit[1].pop(start_symbol+1)
                     unit[1][start_symbol] = len(symbol_index)
 
@@ -116,7 +116,7 @@ def compress(n_algs,symbol_index,new_symbols):
                     if start_symbol + 1 < len(unit[1]):
                         freq_tracker[max_split[1]*b+unit[1][start_symbol+1]] -= 1
                         freq_tracker = freq_insert(freq_tracker,unit[1][start_symbol],unit[1][start_symbol+1],b)
-                    
+
         symbol_index.append(sym)
         freq_tracker[max_split[0]*b+max_split[1]] = 0
 
@@ -144,13 +144,13 @@ n_prime_powers = [
 # medium case
 n = 9360
 n_prime_powers = [
-    
+
     [13,7,"L2 U F' R2 F U' L2 U F' R2 F U' L D2 R U F U R' F D' L' F' D' L ",2],
     [5,4,"U2 L F' D R F D R2 D2 L' U' F' U ",2],
     [9,6,"R' U R2 D L' B2 L D' R2 U' R U' ",2],
     [16,4,"U' L2 F2 B L B' U' L' F2 L' F' L' ",3],
     [16,2,"U' F B' R U' B R' U F' B L' U B' L ",7]
-    
+
 ]
 """
 
@@ -180,7 +180,7 @@ n_algs = []
 curr_unit = 1
 
 #STEP 1: MAKE BASE ALGS
-if True:
+if False:
 
     n_prime_powers = add_multipliers(n,n_prime_powers)
 
@@ -193,7 +193,7 @@ if True:
     file_output(step_1_out,'rubiks_mod_n_base_algs.csv')
 
 
-#STEP 2: OPTIMIZE BASE ALGS 
+#STEP 2: OPTIMIZE BASE ALGS
 
 # optimize the algs in rubiks_mod_n_base_algs.csv
 
@@ -218,7 +218,7 @@ if False:
 # optimize the algs in rubiks_mod_n_unit_algs.csv
 
 #STEP 5: OPTIMIZE UNIT ALGS
-if False:
+if True:
 
     step_5_in = file_input('rubiks_mod_n_unit_algs.csv')
     for unit in n_algs:
